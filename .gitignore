@@ -1,0 +1,42 @@
+# Binaries for programs and plugins
+/bin/
+
+# Test binary, coverage files
+*.test
+coverage.out
+
+# Output of the go coverage tool
+*.out
+
+# Vendor directory
+/vendor/
+
+# Dependency directories
+Godeps/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment config
+.env
+
+# Build directories
+/dist/
+
+# Go modules
+go.sum
+
+# Local build artifacts
+*.log
+
+# container images
+*.tar
+
+# Visual Studio Code workspace storage
+.history/
