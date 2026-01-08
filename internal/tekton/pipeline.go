@@ -38,3 +38,13 @@ func CreateTodoPipeline(client tektonclient.Interface, namespace string) (*tekto
 
 	return createdPipeline, nil
 }
+
+// DeleteTodoPipeline deletes the example pipeline created by this service.
+func DeleteTodoPipeline(client tektonclient.Interface, namespace string) error {
+	pipelineName := "todo-pipeline"
+	// Use Background or Foreground deletion options as appropriate; here we just delete.
+	if err := client.TektonV1().Pipelines(namespace).Delete(context.TODO(), pipelineName, metav1.DeleteOptions{}); err != nil {
+		return fmt.Errorf("failed to delete pipeline %s: %v", pipelineName, err)
+	}
+	return nil
+}

@@ -32,13 +32,19 @@ func main() {
 		log.Printf("Warning creating pipeline: %v", err)
 	}
 
-	// 4. Trigger the PipelineRun
+	// 4. Trigger the PipelineRun (kept for backwards compatibility)
 	fmt.Println("Triggering PipelineRun...")
 	pr, err := tekton.TriggerPipelineRun(client, namespace)
 	if err != nil {
-		log.Fatalf("Error triggering run: %v", err)
+		log.Printf("Error triggering run: %v", err)
+	} else {
+		fmt.Printf("Successfully started PipelineRun: %s\n", pr.Name)
+		fmt.Println("Check status with: tkn pipelinerun logs -f " + pr.Name)
 	}
 
-	fmt.Printf("Successfully started PipelineRun: %s\n", pr.Name)
-	fmt.Println("Check status with: tkn pipelinerun logs -f " + pr.Name)
+	// Start HTTP server with handlers to create/delete pipeline
+	fmt.Println("Starting HTTP server on :8080")
+	http.HandleFunc("/pipeline/create", api.CreatePipelineHandler)
+	http.HandleFunc("/pipeline/delete", api.DeletePipelineHandler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
